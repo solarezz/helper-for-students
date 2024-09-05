@@ -1,9 +1,12 @@
-from art import *
-from colorama import Fore, Back, Style
+import subprocess
 
-Art = text2art("solarezz")
-print(Fore.CYAN + Art)
-print("            ---from studies---")
+
+print(r"             _                              ")
+print(r" ___   ___  | |  __ _  _ __   ___  ____ ____")
+print(r"/ __| / _ \ | | / _` || '__| / _ \|_  /|_  /")
+print(r"\__ \| (_) || || (_| || |   |  __/ / /  / / ")
+print(r"|___/ \___/ |_| \__,_||_|    \___|/___|/___|")
+print(r"----------------from studies----------------")
 
 
 def print_menu():
@@ -18,3 +21,19 @@ def print_menu():
 print_menu()
 
 choice = input("Choice number: ")
+
+while True:
+    if choice == 1:
+        try:
+            script_path = r'./bash_scripts/dhcp-helper-lite'
+
+            result = subprocess.run(['bash', script_path], capture_output=True, text=True, check=True)
+
+            print("Вывод скрипта:")
+            print(result.stdout)
+
+        except subprocess.CalledProcessError as e:
+            print(f'Ошибка выполнения скрипта: {e}')
+            print(f'Код возврата: {e.returncode}')
+            print(f'Сообщение об ошибке: {e.stderr}')
+
