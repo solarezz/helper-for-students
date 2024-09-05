@@ -1,0 +1,65 @@
+#!/bin/bash
+
+if [ "$(id - u)" -ne 0 ]; then
+	echo "Через судо броу"
+	exit 1
+fi
+
+echo "Не получилось развернуть что-ли?))"
+echo "Ща помогу, запоминай мои действия!"
+echo "Для начала пропишем sudo apt update, пиши!"
+read user_command
+echo "Молодец, теперь ждём, но если ты допустил ошибку, запусти заного скрипт, олух!"
+sleep 3
+eval $user_command
+echo "Так, система обновлена, теперь надо установить сам dhcp"
+echo "Пиши: sudo apt install isc-dhcp-server"
+read user_command
+echo "Молодец, теперь ждём, но если ты допустил ошибку, запусти заного скрипт, олух!"
+sleep 3
+eval $user_command
+echo "Так, isc-dhcp-server установлен!"
+echo "Теперь надо кое-что сделать, не волнуйся, всё получится!"
+echo "Справа снизу жмякай на компухтер ПКМ -> Изменить соединение -> double click Проводное соединение -> Параметры IPv4 -> Метод: Вручную -> Ниже добавляй адрес маску и шлюз -> Сохранить"
+echo "Скрипт будет приостановлен на минуту, что бы ты успел всё сделать!"
+sleep 60
+echo "Далее открой новую консоль сочетанием клавиш ALT+T, и пиши туда -> sudo nano /etc/default/isc-dhcp-server"
+echo "Раскомментируй эти две строчки:"
+echo "DHCPDv4_CONF=/etc/dhcp/dhcpd.conf"
+echo "DHCPDv4_PID=/var/run/dhcpd.pid"
+echo "После того как раскоментируешь, не закрывай файл, жди следующих указаний"
+echo "Скрипт будет приостановлен на минуту, что бы ты успел всё сделать!"
+sleep 60
+echo "Теперь - INTERFACESv4 вписывай в ковычках - > eth0"
+echo "Скрипт будет приостановлен на 30 секунд, жди!"
+sleep 30
+echo "Сохраняй файл сочетанием клавиш CTRL + X -> Y -> ENTER"
+sleep 5
+echo "Теперь пиши в другой консоли -> sudo nano /etc/dhcp/dhcpd.conf"
+echo "Закоментируй там всё и вписывай по очереди это(каждая строчка будет останавливать скрипт на 30 секунд):"
+echo "option domain-name \"localhost.localdomain\";"
+sleep 30
+echo "option domain-name-servers 192.168.1.1;"
+sleep 30
+echo "default-lease-time 32400;"
+sleep 30
+echo "max-lease-time 604800;"
+sleep 30
+echo "log-facility local7;"
+sleep 30
+echo "subnet 192.168.1.0 netmask 255.255.255.0 {"
+sleep 30
+echo "authoritative;"
+sleep 30
+echo "range 192.168.1.100 192.168.1.220;"
+sleep 30
+echo "option routers 192.168.1.1;"
+sleep 30
+echo "option subnet-mask 255.255.255.0;"
+sleep 30
+echo "option broadcast-address 192.168.1.255;"
+sleep 30
+echo " }"
+sleep 30
+echo "Поздравляю, 90% работы ты сделал! Теперь пиши sudo dhclient -r, и потом сразу же sudo reboot"
+echo "После перезагрузки пиши sudo systemctl restart isc-dhcp-server, и всё должно работать!"
