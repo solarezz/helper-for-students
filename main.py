@@ -26,7 +26,9 @@ while True:
     if choice == 1:
         try:
             script_path = r'./bash_scripts/dhcp-helper-lite'
-
+            chmod = subprocess.run(['sudo', 'chmod', '+x', script_path], capture_output=True, text=True, check=True)
+            print("Были ваданы опредёленные права для запуска скрипта!")
+            print(chmod.stdout)
             result = subprocess.run(['bash', script_path], capture_output=True, text=True, check=True)
 
             print("Вывод скрипта:")
